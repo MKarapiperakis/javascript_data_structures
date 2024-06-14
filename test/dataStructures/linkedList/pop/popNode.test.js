@@ -1,36 +1,25 @@
-import { it, describe } from "vitest";
-import chalk from "chalk";
+import { it, describe,expect } from "vitest";
 import { LinkedList } from "../../../../dataStructures/linkedList";
-const log = console.log;
 
-describe("pop scenarios", () => {
+
+describe.sequential("pop scenarios", () => {
   it("should pop node", () => {
-    log(chalk.blue.bgGreen(`------------------ pop test 1 ------------------`));
-    console.log(`Two items in list and pop one`);
     let myLinkedList = new LinkedList(2);
-
     myLinkedList.push(1);
 
-    if (myLinkedList.length !== 0) console.log(myLinkedList.pop());
-    else console.log("null");
+    expect(myLinkedList.pop().value).toBe(1);
   });
 
   it("should pop node", () => {
-    log(chalk.blue.bgGreen(`------------------ pop test 2 ------------------`));
-    console.log(`One item in list and pop one`);
     let myLinkedList = new LinkedList(2);
 
-    if (myLinkedList.length !== 0) console.log(myLinkedList.pop());
-    else console.log("null");
+    expect(myLinkedList.pop().value).toBe(2);
   });
 
   it("should return null", () => {
-    log(chalk.blue.bgGreen(`------------------ pop test 3 ------------------`));
-    console.log(`Zero items in list and pop one`);
     let myLinkedList = new LinkedList(2);
     myLinkedList.clear();
 
-    if (myLinkedList.length !== 0) console.log(myLinkedList.pop());
-    else console.log("null");
+    expect(myLinkedList.pop()).toBe(undefined);
   });
 });
