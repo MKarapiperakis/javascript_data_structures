@@ -1,31 +1,16 @@
-import { LinkedList } from "./dataStructures/linkedList.js";
+import connect from "connect";
+import serveStatic from "serve-static";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+import chalk from "chalk";
 
-function listInfo() {
-  // let myLinkedList = new LinkedList(4);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-  // //push nodes
-  // //myLinkedList.clear();
-  // myLinkedList.push(1);
-  // myLinkedList.push(2);
-
-  // //pop nodes
-  // if (myLinkedList.length !== 0) console.log(myLinkedList.pop());
-  // else console.log("null");
-
-  // if (myLinkedList.length !== 0) console.log(myLinkedList.pop().value);
-  // else console.log("null");
-
-  // if (myLinkedList.length !== 0) console.log(myLinkedList.pop().value);
-  // else console.log("null");
-
-  // myLinkedList.getHead();
-  // myLinkedList.getTail();
-  // myLinkedList.getLength();
-  // console.log("\nLinked List:");
-  // myLinkedList.printList();
-
-  console.log("check tests by running \'npm run test\'");
-
-}
-
-listInfo();
+connect()
+  .use(serveStatic(__dirname))
+  .listen(8080, () =>
+    console.log(
+      "Up & running on " + chalk.blue.underline.bold(`http://localhost:8080/public`)
+    )
+  );
