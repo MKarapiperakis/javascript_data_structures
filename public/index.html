@@ -48,14 +48,45 @@
         <button onclick="getLength()">Get Length</button>
       </div>
       <div>
-        <button onclick="getAllNodes()">Show all Nodes</button>
+        <button onclick="getAllNodes()">Show Nodes</button>
       </div>
-      <div class="select-container">
-        <label for="indexDropdown">Get Node:</label>
-        <select id="indexDropdown" onchange="getNodeAtIndex()">
-          <option value="" disabled selected>Select an index</option>
-        </select>
+      <div id="getSetContainer">
+        <div class="select-container">
+          <label for="indexDropdown">Get Node:</label>
+          <select id="indexDropdown" onchange="getNodeAtIndex()">
+            <option value="" disabled selected>Select an index</option>
+          </select>
+        </div>
+        <div class="select-container">
+          <label for="indexSetDropdown">Set</label>
+          <select id="indexSetDropdown" onchange="getNodeAtSetIndex()">
+            <option value="" disabled selected>index</option>
+          </select>
+          <label for="indexSetDropdown">to</label>
+          <input
+            type="text"
+            id="setValue"
+            maxlength="5"
+            placeholder="Value:"
+            oninput="isValid()"
+          />
+          <button
+            id="setSubmit"
+            disabled
+            onclick="setIndex()"
+            style="
+              margin-top: 9px;
+              border-top-left-radius: 0px;
+              border-bottom-left-radius: 0px;
+              max-width: 33px;
+              min-width: 33px;
+            "
+          >
+            ⇨
+          </button>
+        </div>
       </div>
+
       <div>
         <pre id="output"></pre>
       </div>

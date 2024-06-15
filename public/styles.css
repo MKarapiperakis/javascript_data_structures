@@ -159,6 +159,7 @@ pre {
 
 .select-container label {
     margin-right: 10px;
+    margin-left: 10px;
 }
 
 select {
@@ -182,4 +183,21 @@ option {
     padding: 10px;
     background-color: #fff;
     color: #333;
+}
+
+#setValue{
+    max-width: 40px;
+    height: 3px;
+    margin-top:9px;
+    border-radius: 0px;
+    font-size: 14px;
+    padding: 16px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+#setSubmit:disabled {
+    background-color: #ccc; /* Light grey */
+    color: #666; /* Dark grey */
+    cursor: not-allowed;
 }

@@ -123,6 +123,16 @@ class LinkedList {
     if (value) return temp.value;
     else return temp;
   }
+
+  set(index, value) {
+    let temp = this.get(index, false); // Get the node itself, not just the value
+    if (temp) {
+      temp.value = value;
+      updateDropdown(); // Update the dropdown to reflect any changes
+      return true;
+    }
+    return false;
+  }
 }
 
 let list;
@@ -132,6 +142,7 @@ if (!list) {
   document.getElementById("outputNode").style.display = "none";
   document.getElementById("pushContainer").style.display = "none";
   document.getElementById("unshiftContainer").style.display = "none";
+  document.getElementById("getSetContainer").style.display = "none";
 }
 
 function createLinkedList() {
@@ -145,6 +156,7 @@ function createLinkedList() {
   document.getElementById("initialValue").value = "";
   document.getElementById("pushContainer").style.display = "flex";
   document.getElementById("unshiftContainer").style.display = "flex";
+  document.getElementById("getSetContainer").style.display = "block";
   updateDropdown();
 }
 
@@ -205,6 +217,7 @@ function clearList() {
   document.getElementById("outputNode").style.display = "none";
   document.getElementById("pushContainer").style.display = "none";
   document.getElementById("unshiftContainer").style.display = "none";
+  document.getElementById("getSetContainer").style.display = "none";
   list.clear();
   printOutput("List cleared");
   printList();
@@ -257,13 +270,27 @@ function getLength() {
 
 function updateDropdown() {
   const dropdown = document.getElementById("indexDropdown");
+
   dropdown.innerHTML =
     '<option value="" disabled selected>Select an index</option>';
+
   for (let i = 1; i <= list.length; i++) {
     const option = document.createElement("option");
     option.value = i;
     option.textContent = i;
     dropdown.appendChild(option);
+  }
+
+  const dropdown2 = document.getElementById("indexSetDropdown");
+
+  dropdown2.innerHTML =
+    '<option value="" disabled selected>Select an index</option>';
+  for (let i = 1; i <= list.length; i++) {
+    const option = document.createElement("option");
+    option.value = i;
+    option.textContent = i;
+
+    dropdown2.appendChild(option);
   }
 }
 
@@ -284,6 +311,25 @@ function getNodeAtIndex() {
   }
 }
 
+function getNodeAtSetIndex() {
+  const dropdown = document.getElementById("indexSetDropdown");
+  const index = parseInt(dropdown.value);
+  const node = list.get(index);
+  document.getElementById("output").textContent = JSON.stringify(node, null, 2);
+
+  const nodes = document.getElementsByClassName("node");
+  if (nodes.length > 0) {
+    for (let i = 0; i < nodes.length; i++) {
+      nodes[i].classList.remove("head-node");
+      nodes[i].classList.remove("tail-node");
+      nodes[i].classList.remove("length-node");
+    }
+    nodes[index - 1].classList.add("head-node");
+  }
+
+  isValid();
+}
+
 function getAllNodes() {
   const node = list.get(1, false);
   document.getElementById("output").textContent = JSON.stringify(node, null, 2);
@@ -298,11 +344,36 @@ function getAllNodes() {
   }
 }
 
+function setIndex() {
+  let index = document.getElementById("indexSetDropdown").value;
+  let value = document.getElementById("setValue").value;
+
+  list.set(index, value);
+  printOutput(`New value for index ${index} is ${value}`);
+  printList();
+  document.getElementById("setValue").value = "";
+  document.getElementById("setSubmit").disabled = true;
+}
+
+function isValid() {
+  let value = document.getElementById("setValue").value;
+  let index = document.getElementById("indexSetDropdown").value;
+
+  printOutput(`Expected result: ${list.get(index)} -> ${value}`);
+
+  if (value.trim().length === 0 || index === "") {
+    document.getElementById("setSubmit").disabled = true;
+  } else {
+    document.getElementById("setSubmit").disabled = false;
+  }
+}
+
 function printOutput(text) {
   let elements = text.split("->");
 
   elements.forEach((el) => console.log(`ELEMENT IS ${el}`));
   document.getElementById("output").textContent = text;
+  document.getElementById("setSubmit").disabled = true;
 }
 
 function printOutput2(text) {
