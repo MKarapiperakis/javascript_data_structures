@@ -2,7 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
     <title>Linked List</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
@@ -80,6 +83,38 @@
               border-bottom-left-radius: 0px;
               max-width: 33px;
               min-width: 33px;
+              min-height: 37px;
+              max-height: 37px;
+            "
+          >
+            ⇨
+          </button>
+        </div>
+        <div class="select-container">
+          <label for="indexInsertDropdown">Insert</label>
+          <input
+            type="text"
+            id="insertValue"
+            maxlength="5"
+            placeholder="Value:"
+            oninput="isInsertValid()"
+          />
+          <label for="indexInsertDropdown">to</label>
+          <select id="indexInsertDropdown" onchange="getNodeAtInsertIndex()">
+            <option value="" disabled selected>index</option>
+          </select>
+          <button
+            id="insertSubmit"
+            disabled
+            onclick="insertIndex()"
+            style="
+              margin-top: 10px;
+              border-top-left-radius: 0px;
+              border-bottom-left-radius: 0px;
+              max-width: 33px;
+              min-width: 33px;
+              min-height: 37px;
+              max-height: 37px;
             "
           >
             ⇨

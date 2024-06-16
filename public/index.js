@@ -125,13 +125,27 @@ class LinkedList {
   }
 
   set(index, value) {
-    let temp = this.get(index, false); // Get the node itself, not just the value
+    let temp = this.get(index, false);
     if (temp) {
       temp.value = value;
-      updateDropdown(); // Update the dropdown to reflect any changes
+      updateDropdown();
       return true;
     }
     return false;
+  }
+
+  insert(index, value) {
+    if (index < 0 || index > this.length) return false;
+    if (index === this.length) return this.push(value);
+    if (index === 0) return this.unshift(value);
+
+    const newNode = new Node(value);
+    const temp = this.get(index, false);
+    newNode.next = temp.next;
+    temp.next = newNode;
+    this.length++;
+    updateDropdown();
+    return true;
   }
 }
 
@@ -275,7 +289,7 @@ function updateDropdown() {
     '<option value="" disabled selected>Select an index</option>';
 
   for (let i = 1; i <= list.length; i++) {
-    const option = document.createElement("option");
+    let option = document.createElement("option");
     option.value = i;
     option.textContent = i;
     dropdown.appendChild(option);
@@ -286,11 +300,23 @@ function updateDropdown() {
   dropdown2.innerHTML =
     '<option value="" disabled selected>Select an index</option>';
   for (let i = 1; i <= list.length; i++) {
-    const option = document.createElement("option");
+    let option = document.createElement("option");
     option.value = i;
     option.textContent = i;
 
     dropdown2.appendChild(option);
+  }
+
+  const dropdown3 = document.getElementById("indexInsertDropdown");
+
+  dropdown3.innerHTML =
+    '<option value="" disabled selected>Select an index</option>';
+  for (let i = 1; i <= list.length; i++) {
+    let option = document.createElement("option");
+    option.value = i;
+    option.textContent = i;
+
+    dropdown3.appendChild(option);
   }
 }
 
@@ -330,6 +356,31 @@ function getNodeAtSetIndex() {
   isValid();
 }
 
+function getNodeAtInsertIndex() {
+  const dropdown = document.getElementById("indexInsertDropdown");
+  const index = parseInt(dropdown.value);
+  const node = list.get(index);
+  document.getElementById("output").textContent = JSON.stringify(node, null, 2);
+
+  const nodes = document.getElementsByClassName("node");
+  if (nodes.length > 0) {
+    for (let i = 0; i < nodes.length; i++) {
+      nodes[i].classList.remove("head-node");
+      nodes[i].classList.remove("tail-node");
+      nodes[i].classList.remove("length-node");
+    }
+    if(index>1)
+    {
+      nodes[index - 1].classList.add("tail-node");
+      nodes[index - 2].classList.add("tail-node");
+    }
+    else
+      nodes[index - 1].classList.add("tail-node");
+  }
+
+  isInsertValid();
+}
+
 function getAllNodes() {
   const node = list.get(1, false);
   document.getElementById("output").textContent = JSON.stringify(node, null, 2);
@@ -341,6 +392,20 @@ function getAllNodes() {
       nodes[i].classList.remove("tail-node");
       nodes[i].classList.add("length-node");
     }
+  }
+}
+
+function insertIndex() {
+  let index = document.getElementById("indexInsertDropdown").value - 1; // Convert to zero-based index
+  let value = document.getElementById("insertValue").value;
+
+  if (list.insert(index, value)) {
+    printOutput(`Inserted value ${value} at index ${index + 1}`);
+    printList();
+    document.getElementById("insertValue").value = "";
+    document.getElementById("insertSubmit").disabled = true;
+  } else {
+    printOutput("Insertion failed. Check the index and try again.");
   }
 }
 
@@ -359,7 +424,9 @@ function isValid() {
   let value = document.getElementById("setValue").value;
   let index = document.getElementById("indexSetDropdown").value;
 
-  printOutput(`Expected result: ${list.get(index)} -> ${value}`);
+  printOutput(
+    `Expected result: \'${list.get(index)}\' will become \'${value}\'`
+  );
 
   if (value.trim().length === 0 || index === "") {
     document.getElementById("setSubmit").disabled = true;
@@ -368,12 +435,29 @@ function isValid() {
   }
 }
 
-function printOutput(text) {
-  let elements = text.split("->");
+function isInsertValid() {
+  let value = document.getElementById("insertValue").value;
+  let index = document.getElementById("indexInsertDropdown").value;
 
-  elements.forEach((el) => console.log(`ELEMENT IS ${el}`));
+  if (index > 1)
+    printOutput(
+      `Expected result: ${list.get(index - 1)} -> ${value} -> ${list.get(
+        index
+      )}`
+    );
+  else printOutput(`Expected result: ${value} -> ${list.get(index)}`);
+
+  if (value.trim().length === 0 || index === "") {
+    document.getElementById("insertSubmit").disabled = true;
+  } else {
+    document.getElementById("insertSubmit").disabled = false;
+  }
+}
+
+function printOutput(text) {
   document.getElementById("output").textContent = text;
   document.getElementById("setSubmit").disabled = true;
+  document.getElementById("insertSubmit").disabled = true;
 }
 
 function printOutput2(text) {
