@@ -53,72 +53,115 @@
       <div>
         <button onclick="getAllNodes()">Show Nodes</button>
       </div>
-      <div id="getSetContainer">
-        <div class="select-container">
-          <label for="indexDropdown">Get Node:</label>
-          <select id="indexDropdown" onchange="getNodeAtIndex()">
-            <option value="" disabled selected>Select an index</option>
-          </select>
-        </div>
-        <div class="select-container">
-          <label for="indexSetDropdown">Set</label>
-          <select id="indexSetDropdown" onchange="getNodeAtSetIndex()">
-            <option value="" disabled selected>index</option>
-          </select>
-          <label for="indexSetDropdown">to</label>
-          <input
-            type="text"
-            id="setValue"
-            maxlength="5"
-            placeholder="Value:"
-            oninput="isValid()"
-          />
+      <div id="indexContainer">
+        <h3>
+          Accessing elements in linked lists
           <button
-            id="setSubmit"
-            disabled
-            onclick="setIndex()"
+            id="toggleColapse"
+            onclick="toggle()"
             style="
-              margin-top: 9px;
-              border-top-left-radius: 0px;
-              border-bottom-left-radius: 0px;
               max-width: 33px;
               min-width: 33px;
               min-height: 37px;
               max-height: 37px;
+              background: none;
+              color: #3CB371;
+              font-size: 19px
             "
           >
-            ⇨
+            ⬆
           </button>
-        </div>
-        <div class="select-container">
-          <label for="indexInsertDropdown">Insert</label>
-          <input
-            type="text"
-            id="insertValue"
-            maxlength="5"
-            placeholder="Value:"
-            oninput="isInsertValid()"
-          />
-          <label for="indexInsertDropdown">to</label>
-          <select id="indexInsertDropdown" onchange="getNodeAtInsertIndex()">
-            <option value="" disabled selected>index</option>
-          </select>
-          <button
-            id="insertSubmit"
-            disabled
-            onclick="insertIndex()"
-            style="
-              margin-top: 10px;
-              border-top-left-radius: 0px;
-              border-bottom-left-radius: 0px;
-              max-width: 33px;
-              min-width: 33px;
-              min-height: 37px;
-              max-height: 37px;
-            "
-          >
-            ⇨
-          </button>
+        </h3>
+
+        <div class="collapseContainer">
+          <div class="select-container">
+            <label for="indexDropdown">Get Node:</label>
+            <select id="indexDropdown" onchange="getNodeAtIndex()">
+              <option value="" disabled selected>Select an index</option>
+            </select>
+          </div>
+          <div class="select-container">
+            <label for="indexRemoveDropdown">Remove Node at:</label>
+            <select id="indexRemoveDropdown" onchange="getNodeAtRemoveIndex()">
+              <option value="" disabled selected>Select an index</option>
+            </select>
+            <button
+              id="removeSubmit"
+              disabled
+              onclick="removeIndex()"
+              style="
+                margin-top: 10px;
+                border-top-left-radius: 0px;
+                border-bottom-left-radius: 0px;
+                max-width: 33px;
+                min-width: 33px;
+                min-height: 37px;
+                max-height: 37px;
+              "
+            >
+              ⇨
+            </button>
+          </div>
+          <div class="select-container">
+            <label for="indexSetDropdown">Set</label>
+            <select id="indexSetDropdown" onchange="getNodeAtSetIndex()">
+              <option value="" disabled selected>index</option>
+            </select>
+            <label for="indexSetDropdown">to</label>
+            <input
+              type="text"
+              id="setValue"
+              maxlength="5"
+              placeholder="Value:"
+              oninput="isValid()"
+            />
+            <button
+              id="setSubmit"
+              disabled
+              onclick="setIndex()"
+              style="
+                margin-top: 9px;
+                border-top-left-radius: 0px;
+                border-bottom-left-radius: 0px;
+                max-width: 33px;
+                min-width: 33px;
+                min-height: 37px;
+                max-height: 37px;
+              "
+            >
+              ⇨
+            </button>
+          </div>
+          <div class="select-container">
+            <label for="indexInsertDropdown">Insert</label>
+            <input
+              type="text"
+              id="insertValue"
+              maxlength="5"
+              placeholder="Value:"
+              oninput="isInsertValid()"
+            />
+            <label for="indexInsertDropdown">to</label>
+            <select id="indexInsertDropdown" onchange="getNodeAtInsertIndex()">
+              <option value="" disabled selected>index</option>
+            </select>
+            <button
+              id="insertSubmit"
+              disabled
+              onclick="insertIndex()"
+              style="
+                margin-top: 10px;
+                border-top-left-radius: 0px;
+                border-bottom-left-radius: 0px;
+                max-width: 33px;
+                min-width: 33px;
+                min-height: 37px;
+                max-height: 37px;
+              "
+            >
+              ⇨
+            </button>
+          </div>
         </div>
       </div>
 

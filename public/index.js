@@ -147,16 +147,32 @@ class LinkedList {
     updateDropdown();
     return true;
   }
+
+  remove(index) {
+    if (index < 0 || index >= this.length) return undefined;
+    if (index === 0) return this.shift();
+    if (index === this.length - 1) return this.pop();
+
+    const before = this.get(index - 1);
+    const temp = before.next;
+
+    before.next = temp.next;
+    temp.next = null;
+    this.length--;
+    updateDropdown();
+    return temp;
+  }
 }
 
 let list;
+let isCollapse = false;
 
 if (!list) {
   document.getElementById("output").style.display = "none";
   document.getElementById("outputNode").style.display = "none";
   document.getElementById("pushContainer").style.display = "none";
   document.getElementById("unshiftContainer").style.display = "none";
-  document.getElementById("getSetContainer").style.display = "none";
+  document.getElementById("indexContainer").style.display = "none";
 }
 
 function createLinkedList() {
@@ -170,7 +186,7 @@ function createLinkedList() {
   document.getElementById("initialValue").value = "";
   document.getElementById("pushContainer").style.display = "flex";
   document.getElementById("unshiftContainer").style.display = "flex";
-  document.getElementById("getSetContainer").style.display = "block";
+  document.getElementById("indexContainer").style.display = "block";
   updateDropdown();
 }
 
@@ -192,6 +208,9 @@ function unshiftValue() {
   list.unshift(value);
   printOutput("Unshifted value: " + value);
   printList();
+  if (list.length > 0) {
+    document.getElementById("outputNode").style.display = "block";
+  }
   document.getElementById("unshiftValue").value = "";
 }
 
@@ -231,7 +250,7 @@ function clearList() {
   document.getElementById("outputNode").style.display = "none";
   document.getElementById("pushContainer").style.display = "none";
   document.getElementById("unshiftContainer").style.display = "none";
-  document.getElementById("getSetContainer").style.display = "none";
+  document.getElementById("indexContainer").style.display = "none";
   list.clear();
   printOutput("List cleared");
   printList();
@@ -318,6 +337,18 @@ function updateDropdown() {
 
     dropdown3.appendChild(option);
   }
+
+  const dropdown4 = document.getElementById("indexRemoveDropdown");
+
+  dropdown4.innerHTML =
+    '<option value="" disabled selected>Select an index</option>';
+  for (let i = 1; i <= list.length; i++) {
+    let option = document.createElement("option");
+    option.value = i;
+    option.textContent = i;
+
+    dropdown4.appendChild(option);
+  }
 }
 
 function getNodeAtIndex() {
@@ -369,21 +400,44 @@ function getNodeAtInsertIndex() {
       nodes[i].classList.remove("tail-node");
       nodes[i].classList.remove("length-node");
     }
-    if(index>1)
-    {
+    if (index > 1) {
       nodes[index - 1].classList.add("tail-node");
       nodes[index - 2].classList.add("tail-node");
-    }
-    else
-      nodes[index - 1].classList.add("tail-node");
+    } else nodes[index - 1].classList.add("tail-node");
   }
 
   isInsertValid();
 }
 
+function getNodeAtRemoveIndex() {
+  const dropdown = document.getElementById("indexRemoveDropdown");
+  const index = parseInt(dropdown.value);
+  const node = list.get(index);
+  document.getElementById("output").textContent = JSON.stringify(node, null, 2);
+
+  const nodes = document.getElementsByClassName("node");
+  if (nodes.length > 0) {
+    for (let i = 0; i < nodes.length; i++) {
+      nodes[i].classList.remove("head-node");
+      nodes[i].classList.remove("tail-node");
+      nodes[i].classList.remove("length-node");
+    }
+    nodes[index - 1].classList.add("head-node");
+  }
+
+  isRemoveValid();
+}
+
 function getAllNodes() {
   const node = list.get(1, false);
-  document.getElementById("output").textContent = JSON.stringify(node, null, 2);
+  if (list.getLength() === 0)
+    document.getElementById("output").textContent = "The list is empty";
+  else
+    document.getElementById("output").textContent = JSON.stringify(
+      node,
+      null,
+      2
+    );
 
   const nodes = document.getElementsByClassName("node");
   if (nodes.length > 0) {
@@ -420,6 +474,20 @@ function setIndex() {
   document.getElementById("setSubmit").disabled = true;
 }
 
+function removeIndex() {
+  let index = document.getElementById("indexRemoveDropdown").value;
+
+  printOutput(`Deleted value: ${list.get(index)}`);
+  list.remove(index - 1);
+
+  printList();
+
+  document.getElementById("removeSubmit").disabled = true;
+
+  if (list.length === 0)
+    document.getElementById("outputNode").style.display = "none";
+}
+
 function isValid() {
   let value = document.getElementById("setValue").value;
   let index = document.getElementById("indexSetDropdown").value;
@@ -454,10 +522,23 @@ function isInsertValid() {
   }
 }
 
+function isRemoveValid() {
+  let index = document.getElementById("indexRemoveDropdown").value;
+
+  printOutput(`Expected value to be removed:  ${list.get(index)}`);
+
+  if (index === "") {
+    document.getElementById("removeSubmit").disabled = true;
+  } else {
+    document.getElementById("removeSubmit").disabled = false;
+  }
+}
+
 function printOutput(text) {
   document.getElementById("output").textContent = text;
   document.getElementById("setSubmit").disabled = true;
   document.getElementById("insertSubmit").disabled = true;
+  document.getElementById("removeSubmit").disabled = true;
 }
 
 function printOutput2(text) {
@@ -487,4 +568,18 @@ function printOutput2(text) {
   if (outputContainer.lastChild) {
     outputContainer.removeChild(outputContainer.lastChild);
   }
+}
+
+function toggle() {
+  const elements = document.getElementsByClassName("collapseContainer");
+  for (let i = 0; i < elements.length; i++) {
+    if (!isCollapse) {
+      elements[i].style.display = "none";
+      document.getElementById("toggleColapse").textContent = "⬇";
+    } else {
+      elements[i].style.display = "inline";
+      document.getElementById("toggleColapse").textContent = "⬆";
+    }
+  }
+  isCollapse = !isCollapse;
 }

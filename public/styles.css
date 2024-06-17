@@ -3,12 +3,13 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     color: #333;
-    margin: 0;
+    margin: 30;
     padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
+    overflow: auto; /* Add this to prevent content overflow issues */
 }
 
 .container {
@@ -19,9 +20,20 @@ body {
     max-width: 500px;
     width: 100%;
     text-align: center;
+    overflow: auto; /* Ensure container can scroll if content overflows */
 }
 
-h1 {
+.collapseContainer{
+    display: inline;
+}
+
+#indexContainer {
+    border: 3px outset #5A9;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+h1,h3 {
     margin-bottom: 20px;
     color: #5A9;
 }
@@ -136,12 +148,12 @@ pre {
 }
 
 .tail-node {
-    background-color: #800080; /* Purple - Initial color */
+    background-color: #800080;
     animation: tail-animation 0.3s ease-out; 
 }
 
 .length-node {
-    background-color: #3CB371; /* Medium Sea Green - Initial color */
+    background-color: #3CB371; 
     animation: length-animation 0.3s ease-out; 
 }
 
@@ -206,14 +218,14 @@ option {
 }
 
 #setSubmit:disabled {
-    background-color: #ccc; /* Light grey */
-    color: #666; /* Dark grey */
+    background-color: #ccc; 
+    color: #666; 
     cursor: not-allowed;
 }
 
 #insertSubmit:disabled {
-    background-color: #ccc; /* Light grey */
-    color: #666; /* Dark grey */
+    background-color: #ccc; 
+    color: #666; 
     cursor: not-allowed;
 }
 
@@ -222,4 +234,17 @@ option {
     border-bottom-right-radius: 0px;
     min-height: 37px;
     max-height: 37px;
+}
+
+#indexRemoveDropdown{
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    min-height: 37px;
+    max-height: 37px;
+}
+
+#removeSubmit:disabled {
+    background-color: #ccc; 
+    color: #666; 
+    cursor: not-allowed;
 }
