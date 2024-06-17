@@ -153,9 +153,8 @@ class LinkedList {
     if (index === 0) return this.shift();
     if (index === this.length - 1) return this.pop();
 
-    const before = this.get(index - 1);
+    const before = this.get(index,false);
     const temp = before.next;
-
     before.next = temp.next;
     temp.next = null;
     this.length--;
