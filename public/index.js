@@ -153,13 +153,28 @@ class LinkedList {
     if (index === 0) return this.shift();
     if (index === this.length - 1) return this.pop();
 
-    const before = this.get(index,false);
+    const before = this.get(index, false);
     const temp = before.next;
     before.next = temp.next;
     temp.next = null;
     this.length--;
     updateDropdown();
     return temp;
+  }
+
+  reverse() {
+    let temp = this.head;
+    this.head = this.tail;
+    this.tail = temp;
+    let next = temp.next;
+    let prev = null;
+    for (let i = 0; i < this.length; i++) {
+      next = temp.next;
+      temp.next = prev;
+      prev = temp;
+      temp = next;
+    }
+    updateDropdown();
   }
 }
 
@@ -533,6 +548,16 @@ function isRemoveValid() {
   }
 }
 
+function reverseNodes() {
+  if (list.getLength() > 0) {
+    list.reverse();
+    printList();
+    printOutput(`List has been reversed`);
+  } else {
+    printOutput(`The list is empty`);
+  }
+}
+
 function printOutput(text) {
   document.getElementById("output").textContent = text;
   document.getElementById("setSubmit").disabled = true;
@@ -543,18 +568,15 @@ function printOutput(text) {
 function printOutput2(text) {
   let elements = text.split(" -> ");
 
-  // Clear the existing content
   const outputContainer = document.getElementById("outputNode");
   outputContainer.innerHTML = "";
 
-  // Create and append new nodes for each element
   elements.forEach((el) => {
-    if (el.trim() === "null") return; // Skip the 'null' text
+    if (el.trim() === "null") return;
     const node = document.createElement("div");
     node.className = "node";
     node.textContent = el.trim();
 
-    // Create an arrow between nodes
     const arrow = document.createElement("div");
     arrow.className = "arrow";
     arrow.innerHTML = "→";
@@ -563,7 +585,6 @@ function printOutput2(text) {
     outputContainer.appendChild(arrow);
   });
 
-  // Remove the last arrow
   if (outputContainer.lastChild) {
     outputContainer.removeChild(outputContainer.lastChild);
   }
