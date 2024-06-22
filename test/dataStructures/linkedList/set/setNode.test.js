@@ -1,7 +1,7 @@
 import { it, expect } from "vitest";
 import { LinkedList } from "../../../../dataStructures/linkedList";
 
-it("should push node", () => {
+it("should set node", () => {
   let myLinkedList = new LinkedList(2);
   myLinkedList.push("test");
 
