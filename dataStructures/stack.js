@@ -32,9 +32,9 @@ export class Stack {
     return this.length;
   }
 
-  makeEmpty() {
+  clear() {
     this.top = null;
-    this.height = 0;
+    this.length = 0;
   }
 
   push(value) {
@@ -46,5 +46,16 @@ export class Stack {
       this.top = newNode;
     }
     this.length++;
+  }
+
+  pop() {
+    if (this.length === 0) return undefined;
+
+    let temp = this.top;
+    this.top = this.top.next;
+    temp.next = null;
+
+    this.length--;
+    return temp;
   }
 }
