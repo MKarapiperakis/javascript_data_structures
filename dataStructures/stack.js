@@ -31,4 +31,20 @@ export class Stack {
   getLength() {
     return this.length;
   }
+
+  makeEmpty() {
+    this.top = null;
+    this.height = 0;
+  }
+
+  push(value) {
+    const newNode = new Node(value);
+    if (this.length === 0) {
+      this.top = newNode;
+    } else {
+      newNode.next = this.top;
+      this.top = newNode;
+    }
+    this.length++;
+  }
 }
