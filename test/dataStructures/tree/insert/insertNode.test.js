@@ -29,12 +29,10 @@ describe.sequential("insert scenarios", () => {
     expect(tree.root.left.value).toBe(3);
   });
 
-  it("should insert new node", () => {
+  it("should return undefined", () => {
     let tree = new BST();
 
     tree.insert(5);
-    tree.insert(5);
-
-    expect(tree.root.value).toBe(5);
+    expect(tree.insert(5)).toBe(undefined);
   });
 });
