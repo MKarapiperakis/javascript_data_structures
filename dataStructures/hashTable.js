@@ -16,4 +16,13 @@ export class HashTable {
       console.log(i, ": ", this.dataMap[i]);
     }
   }
+
+  set(key, value) {
+    let index = this._hash(key);
+    console.log(index);
+    if (!this.dataMap[index]) this.dataMap[index] = [];
+
+    this.dataMap[index].push([key, value]);
+    return this;
+  }
 }
