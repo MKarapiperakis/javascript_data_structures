@@ -19,7 +19,6 @@ export class HashTable {
 
   set(key, value) {
     let index = this._hash(key);
-    console.log(index);
     if (!this.dataMap[index]) this.dataMap[index] = [];
 
     this.dataMap[index].push([key, value]);
