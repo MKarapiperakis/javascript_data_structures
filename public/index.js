@@ -1,3 +1,4 @@
+// Node class represents a single node in a linked list
 class Node {
   constructor(value) {
     this.value = value;
@@ -5,6 +6,7 @@ class Node {
   }
 }
 
+// LinkedList class represents the entire linked list
 class LinkedList {
   constructor(value) {
     const newNode = new Node(value);
@@ -13,6 +15,7 @@ class LinkedList {
     this.length = 1;
   }
 
+  // Prints all the values in the linked list
   printList() {
     let temp = this.head;
     while (temp !== null) {
@@ -21,6 +24,7 @@ class LinkedList {
     }
   }
 
+  // Returns the value of the head node
   getHead() {
     if (this.head === null) {
       return null;
@@ -29,6 +33,7 @@ class LinkedList {
     }
   }
 
+  // Returns the value of the tail node
   getTail() {
     if (this.tail === null) {
       return null;
@@ -37,10 +42,12 @@ class LinkedList {
     }
   }
 
+  // Returns the length of the linked list
   getLength() {
     return this.length;
   }
 
+  // Clears the linked list
   clear() {
     this.head = null;
     this.tail = null;
@@ -48,6 +55,7 @@ class LinkedList {
     updateDropdown();
   }
 
+  // Adds a new node with the given value at the end of the linked list
   push(value) {
     const newNode = new Node(value);
     if (!this.head) {
@@ -62,6 +70,7 @@ class LinkedList {
     return this;
   }
 
+  // Removes and returns the last node from the linked list
   pop() {
     if (this.length === 0) return undefined;
 
@@ -85,6 +94,7 @@ class LinkedList {
     return temp;
   }
 
+  // Adds a new node with the given value at the start of the linked list
   unshift(value) {
     const newNode = new Node(value);
 
@@ -101,6 +111,7 @@ class LinkedList {
     return this;
   }
 
+  // Removes and returns the first node from the linked list
   shift() {
     if (this.length === 0) return undefined;
     let temp = this.head;
@@ -114,6 +125,7 @@ class LinkedList {
     return temp;
   }
 
+  // Returns the value of the node at the given index
   get(index, value = true) {
     if (index < 1 || index > this.length) return undefined;
     let temp = this.head;
@@ -124,6 +136,7 @@ class LinkedList {
     else return temp;
   }
 
+  // Sets the value of the node at the given index
   set(index, value) {
     let temp = this.get(index, false);
     if (temp) {
@@ -134,6 +147,7 @@ class LinkedList {
     return false;
   }
 
+  // Inserts a new node with the given value at the specified index
   insert(index, value) {
     if (index < 0 || index > this.length) return false;
     if (index === this.length) return this.push(value);
@@ -148,6 +162,7 @@ class LinkedList {
     return true;
   }
 
+  // Removes and returns the node at the specified index
   remove(index) {
     if (index < 0 || index >= this.length) return undefined;
     if (index === 0) return this.shift();
@@ -162,6 +177,7 @@ class LinkedList {
     return temp;
   }
 
+  // Reverses the linked list
   reverse() {
     let temp = this.head;
     this.head = this.tail;
