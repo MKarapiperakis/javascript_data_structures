@@ -50,4 +50,12 @@ export class BST {
     }
     return false;
   }
+
+  findMin() {
+    console.log(this.root);
+    if (!this.root.left) return this.root.value;
+
+    this.root = this.root.left;
+    return this.findMin();
+  }
 }
