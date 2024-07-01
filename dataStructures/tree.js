@@ -51,11 +51,32 @@ export class BST {
     return false;
   }
 
-  findMin() {
-    console.log(this.root);
-    if (!this.root.left) return this.root.value;
+  findMin(node = this.root) {
+    if (node === null) return null;
+    while (node.left !== null) {
+      node = node.left;
+    }
+    return node.value;
+  }
 
-    this.root = this.root.left;
-    return this.findMin();
+  remove(value) {
+    this.root = this._removeNode(this.root, value);
+  }
+
+  _removeNode(node, value) {
+    if (node === null) return null;
+
+    if (value < node.value) {
+      node.left = this._removeNode(node.left, value);
+    } else if (value > node.value) {
+      node.right = this._removeNode(node.right, value);
+    } else {
+      if (node.left === null) return node.right;
+      if (node.right === null) return node.left;
+
+      node.value = this.findMin(node.right);
+      node.right = this._removeNode(node.right, node.value);
+    }
+    return node;
   }
 }
